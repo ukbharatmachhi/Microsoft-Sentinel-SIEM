@@ -9,7 +9,7 @@ Azure Lighthouse is a multi-tenant management solution that enables Managed Serv
 
 **3. Scalability** – Ideal for MSPs and enterprises managing multiple clients.
 
-**4. Security & Compliance **– Provides just-in-time access and least privilege access control.
+**4. Security & Compliance** – Provides just-in-time access and least privilege access control.
 
 **5. Automation & Monitoring** – Uses Azure Monitor, Log Analytics, and Security Center across tenants.
 
