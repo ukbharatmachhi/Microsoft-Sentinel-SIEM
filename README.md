@@ -100,6 +100,25 @@ This helps in integrating monitoring data like logs and metrics from resources i
 3. Select your **Log Analytics workspace**.
 4. Click **Enable Microsoft Sentinel**.
 
+OR
+
+## Custom Deployment: ARM Template for Sentinel Deployment
+
+### Create sentinel-deployment.json with
+``` json
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/providers",
+      "apiVersion": "2021-10-01",
+      "name": "[concat(parameters('sentinel-ws'), '/Microsoft.SecurityInsights')]",
+      "properties": {}
+    }
+  ]
+}
+```
 ## Step 2: Connect Data Sources
 
 We started by installing relevant solutions from the **Microsoft Sentinel Content Hub**, which serves as a centralized marketplace for pre-built security content. The Content Hub enables seamless deployment of **Workbooks, Analytics Rules, Hunting Queries, Playbooks, and Data Connectors,** helping organizations enhance their threat detection and response capabilities.
@@ -109,3 +128,8 @@ By leveraging Content Hub, we integrated various security solutions such as **En
 1. Navigate to **Data Connectors**.
 2. Select **Azure Activity, Syslogs, Common Event Format, Entra Id, Microsoft Defender Endpoint, Microsoft Defender Cloud, Office 365, AWS Cloud Trial, Web Application Firewall, and other sources.**
 3. Click **Open Connector Page** and follow the instructions to connect the data connector.
+
+## Step 3: Configure Analytics & Hunting Queries
+1. Go to **Analytics** → Create **Detection Rules**.
+2. Use prebuilt **KQL queries** or customize them.
+3. Save the rule and set up alerts.
