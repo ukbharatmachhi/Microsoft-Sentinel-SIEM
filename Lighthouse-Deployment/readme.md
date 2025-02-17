@@ -18,3 +18,5 @@ Azure Lighthouse is a multi-tenant management solution that enables Managed Serv
 Goto Azure Portal and Login as Global Administrator and search for Azure Lighthouse and Click on Deploy to Azure for Azure Lighthouse – Subscription Deployment 
 
 ![Reference Image](light1.jpg)
+
+![Reference Image](light2.jpg)
