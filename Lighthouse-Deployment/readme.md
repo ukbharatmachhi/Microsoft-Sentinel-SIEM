@@ -19,4 +19,4 @@ Goto Azure Portal and Login as Global Administrator and search for Azure Lightho
 
 ![Reference Image](light1.jpg)
 
-![Reference Image](light2.jpg)
+![Reference Image](light2.png)
