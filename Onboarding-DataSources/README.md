@@ -3,6 +3,8 @@ Microsoft Sentinel is a cloud-native SIEM (Security Information and Event Manage
 
 For a real estate client, onboarding data sources in Microsoft Sentinel enhances cybersecurity by monitoring property management systems, financial transactions, IoT security, and cloud infrastructure. By integrating logs and automating responses, organizations can detect fraud, prevent unauthorized access, and improve overall security posture.
 
+By leveraging Content Hub, we integrated various security solutions such as Entra Id, Microsoft Defender Endpoint, Microsoft Defender Cloud, Office 365, AWS Cloud Trial, Web Application Firewall, and other third-party tools, ensuring comprehensive log ingestion, real-time monitoring, and automated response workflows. This streamlined approach allows security teams to detect, investigate, and mitigate threats efficiently without manually configuring each component.
+
 ## Understanding the Real Estate Client’s Needs
 A real estate company typically deals with:
 
@@ -20,7 +22,7 @@ To enhance security, Sentinel should ingest logs from these data sources to dete
 Microsoft Sentinel provides built-in connectors for common services and allows custom log ingestion for others.
 
 #### Native Connectors for Cloud & IT Infrastructure
-1. Azure AD → Detect suspicious logins, MFA bypass attempts.
+1. Entra ID → Detect suspicious logins, MFA bypass attempts.
 2. Microsoft Defender → Monitor security alerts from Defender for Endpoint, Office 365, and Cloud Apps.
 3. AWS CloudTrail & GCP Logs → Capture cloud activity logs if the real estate firm uses multi-cloud setups.
 
