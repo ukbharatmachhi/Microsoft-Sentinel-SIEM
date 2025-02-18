@@ -18,9 +18,9 @@ This helps in integrating monitoring data like logs and metrics from resources i
 
 **9) Network Connectivity:** Ensure that network connectivity to Azure resources and data sources is properly configured. If needed, set up VPN or ExpressRoute for secure connectivity, especially for on-premises data sources.
 
-# Microsoft Sentinel Onboarding Process in the infrastructure
+## Microsoft Sentinel Onboarding Process in the infrastructure
 
-## Enable Microsoft Sentinel
+### Enable Microsoft Sentinel
 
 1. Sign in to **Azure Portal**.
 2. Go to **Microsoft Sentinel** and click **+ Add**.
