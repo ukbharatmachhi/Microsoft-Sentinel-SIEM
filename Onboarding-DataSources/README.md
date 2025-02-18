@@ -1,4 +1,4 @@
-# Onboarding Data Sources in Microsoft Sentinel for a Real Estate Client
+# Onboarding Data Sources in Microsoft Sentinel
 Microsoft Sentinel is a cloud-native SIEM (Security Information and Event Management) and SOAR (Security Orchestration Automated Response) solution in Microsoft Azure. Onboarding data sources is a critical step to ensure comprehensive security monitoring and threat detection.
 
 For a real estate client, onboarding data sources in Microsoft Sentinel enhances cybersecurity by monitoring property management systems, financial transactions, IoT security, and cloud infrastructure. By integrating logs and automating responses, organizations can detect fraud, prevent unauthorized access, and improve overall security posture.
