@@ -20,7 +20,7 @@ This helps in integrating monitoring data like logs and metrics from resources i
 
 # Microsoft Sentinel Onboarding Process in the infrastructure
 
-## Step 1: Enable Microsoft Sentinel
+## Enable Microsoft Sentinel
 
 1. Sign in to **Azure Portal**.
 2. Go to **Microsoft Sentinel** and click **+ Add**.
@@ -46,18 +46,3 @@ OR
   ]
 }
 ```
-## Step 2: Connect Data Sources
-
-We started by installing relevant solutions from the **Microsoft Sentinel Content Hub**, which serves as a centralized marketplace for pre-built security content. The Content Hub enables seamless deployment of **Workbooks, Analytics Rules, Hunting Queries, Playbooks, and Data Connectors,** helping organizations enhance their threat detection and response capabilities.
-
-By leveraging Content Hub, we integrated various security solutions such as **Entra Id, Microsoft Defender Endpoint, Microsoft Defender Cloud, Office 365, AWS Cloud Trial, Web Application Firewall, and other third-party tools,** ensuring comprehensive log ingestion, real-time monitoring, and automated response workflows. This streamlined approach allows security teams to detect, investigate, and mitigate threats efficiently without manually configuring each component.
-
-1. Navigate to **Data Connectors**.
-2. Select **Azure Activity, Syslogs, Common Event Format, Entra Id, Microsoft Defender Endpoint, Microsoft Defender Cloud, Office 365, AWS Cloud Trial, Web Application Firewall, and other sources.**
-3. Click **Open Connector Page** and follow the instructions to connect the data connector.
-
-## Step 3: Configure Analytics & Hunting Queries
-1. Go to **Analytics** → Create **Detection Rules**.
-2. Use prebuilt **KQL queries** or customize them.
-3. Save the rule and set up alerts.
-
