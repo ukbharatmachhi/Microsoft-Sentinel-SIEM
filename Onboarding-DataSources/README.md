@@ -40,3 +40,5 @@ Since property management platforms may not have native Sentinel connectors, you
 #### IoT & Physical Security
 1. Security Cameras & Smart Locks → Ingest logs from building security systems to detect unauthorized entry.
 2. IoT Device Logs → Identify vulnerabilities in smart home technology.
+
+For a Real Estate client, onboarding data sources in Microsoft Sentinel enhances cybersecurity by monitoring property management systems, financial transactions, IoT security, and cloud infrastructure. By integrating logs and automating responses, organizations can detect fraud, prevent unauthorized access, and improve overall security posture.
