@@ -1,0 +1,40 @@
+id: suspicious-wire-transfer-detection
+name: "Suspicious Wire Transfers in Transactions"
+description: "Detects high-value wire transfers sent to blacklisted accounts, indicating potential fraud."
+severity: High
+enabled: true
+query: |
+  FinancialTransactions
+  | where TransactionType == "Wire Transfer"
+  | where Amount > 100000  // High-value transactions
+  | where RecipientBankAccount in ("BlacklistedAccount1", "BlacklistedAccount2")
+triggerOperator: gt
+triggerThreshold: 1
+queryFrequency: 10m
+queryPeriod: 10m
+suppressionDuration: 30m
+suppressionEnabled: false
+tactics:
+  - Impact
+relevantTechniques:
+  - T1583  # Compromise Infrastructure (MITRE ATT&CK)
+actionGroups:
+  - name: "Fraud Alert"
+    sendToSOC: true
+    emailNotification:
+      enabled: true
+      recipients:
+        - "finance-team@company.com"
+        - "it-security@company.com"
+responseActions:
+  - type: "Freeze-Transaction"
+    action: "Run Playbook"
+    parameters:
+      TransactionID: "{{TransactionID}}"
+      Reason: "Potential fraudulent wire transfer detected"
+  - type: "Notify-Teams"
+    action: "Send Email"
+    parameters:
+      subject: "Urgent: Suspicious Wire Transfer Alert"
+      body: "A high-value wire transfer to a blacklisted account was detected. Please verify immediately."
+version: 1.0.0
