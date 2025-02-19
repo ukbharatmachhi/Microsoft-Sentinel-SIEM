@@ -1,4 +1,3 @@
-id: suspicious-wire-transfer-detection
 name: "Suspicious Wire Transfers in Transactions"
 description: "Detects high-value wire transfers sent to blacklisted accounts, indicating potential fraud."
 severity: High
