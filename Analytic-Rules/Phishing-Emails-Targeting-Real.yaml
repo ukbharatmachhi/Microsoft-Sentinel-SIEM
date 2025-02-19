@@ -1,0 +1,51 @@
+name: "Phishing Emails Targeting Real Estate Agents"
+description: |
+  Detects phishing emails impersonating mortgage lenders or title companies, particularly those with urgent financial requests.
+status: "Enabled"
+enabled: true
+severity: "High"
+query: |
+  let suspicious_domains = dynamic(["untrusted.com", "exampledomain.com"]); // List of untrusted domains to watch for
+  let financial_keywords = dynamic(["urgent", "payment", "funds", "transfer", "immediate action", "bank details", "wire transfer"]);
+  EmailEvents
+  | where Timestamp > ago(1h) // Check emails from the last hour (adjustable based on need)
+  | where SenderDomain in (suspicious_domains) // Filter by untrusted domains
+  | where Body contains_any (financial_keywords) // Look for financial terms in email body
+  | where Subject contains_any (financial_keywords) // Look for financial terms in subject line
+  | project Timestamp, SenderAddress, SenderDomain, RecipientAddress, Subject, Body
+  | order by Timestamp desc
+alert_settings:
+  trigger: "Any"
+  frequency: "Every 5 minutes"
+  threshold: 1
+  alert_type: "High"
+  escalation_level: 2
+  description: "Phishing email detected: Urgent financial request from untrusted domain."
+response_actions:
+  - action_type: "Quarantine"
+    action_parameters:
+      quarantine_email: "true"
+      email_id: "{{EmailID}}"
+      reason: "Phishing attempt detected from untrusted domain with urgent financial request."
+  - action_type: "Warn"
+    action_parameters:
+      warn_recipient: "true"
+      recipient_email: "{{RecipientAddress}}"
+      warning_message: |
+        A phishing email has been detected targeting you. The email claimed to be from a mortgage lender or title company and contained urgent financial requests.
+        Please do not respond or provide any sensitive information.
+  - action_type: "Flag for Review"
+    action_parameters:
+      review_needed: "true"
+      email_id: "{{EmailID}}"
+      review_reason: "Suspicious email requiring review due to potential phishing attempt."
+schedule:
+  interval: "Every 5 minutes"
+  start_time: "2025-02-19T00:00:00Z"
+  end_time: null
+tags:
+  - "phishing"
+  - "real-estate"
+  - "cybersecurity"
+  - "email-scam"
+  - "financial-fraud"
