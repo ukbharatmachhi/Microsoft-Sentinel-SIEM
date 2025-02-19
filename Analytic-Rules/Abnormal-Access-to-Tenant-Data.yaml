@@ -1,0 +1,48 @@
+name: "Abnormal Access to Tenant Data"
+description: |
+  Detects when a real estate employee accesses a large number of tenant records within a short time, indicating potential data theft.
+status: "Enabled"
+enabled: true
+severity: "High"
+query: |
+  let time_window = 1h;  // Define the time window for detecting bulk access
+  let threshold = 100;   // Define the threshold for abnormal access
+  // This assumes you have a "DatabaseAccessLogs" table with relevant data
+  DatabaseAccessLogs
+  | where Timestamp > ago(time_window)
+  | where AccessType == "Read" // Filter for read access actions
+  | where TableName == "TenantRecords" // Filter for tenant record queries
+  | summarize AccessCount = count() by UserID, bin(Timestamp, 10m)
+  | where AccessCount > threshold
+  | project UserID, AccessCount, Timestamp
+  | order by AccessCount desc
+alert_settings:
+  trigger: "Any"
+  frequency: "Every 5 minutes"
+  threshold: 1
+  alert_type: "High"
+  escalation_level: 2
+  description: "Potential data theft detected due to abnormal access to tenant records."
+response_actions:
+  - action_type: "Alert"
+    action_parameters:
+      recipients:
+        - "security@realestatecompany.com"
+      alert_subject: "Abnormal Access to Tenant Data Detected"
+      alert_message: |
+        An employee has accessed a large number of tenant records within a short time, which may indicate potential data theft. Review the activity immediately.
+  - action_type: "Restrict Access"
+    action_parameters:
+      restrict_user: "true"
+      user_id: "{{UserID}}"
+      reason: "Abnormal access pattern detected"
+      comment: "Access to tenant data has been restricted due to suspicious activity."
+schedule:
+  interval: "Every 5 minutes"
+  start_time: "2025-01-10T00:00:00Z"
+  end_time: null
+tags:
+  - "data-theft"
+  - "tenant-records"
+  - "abnormal-access"
+  - "real-estate"
