@@ -1,4 +1,3 @@
-id: unauthorized-access-property-management
 name: "Unauthorized Access to Property Management System"
 description: "Detects multiple failed login attempts to property management platforms (e.g., Yardi, RealPage, Salesforce) indicating possible credential abuse."
 severity: High
