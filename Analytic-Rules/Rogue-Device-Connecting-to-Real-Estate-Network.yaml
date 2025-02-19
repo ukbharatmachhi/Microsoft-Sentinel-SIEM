@@ -1,0 +1,52 @@
+name: "Rogue Device Connecting to Real Estate Network"
+description: |
+  Detects when an unauthorized device connects to the corporate network (Wi-Fi or VPN) by detecting a new MAC address that isn't registered.
+status: "Enabled"
+enabled: true
+severity: "High"
+query: |
+  let registered_mac_addresses = dynamic(["00:14:22:01:23:45", "00:14:22:01:23:46"]); // List of registered MAC addresses
+  let new_device_threshold = 1; // Threshold to detect a single unauthorized device
+  NetworkConnectionLogs
+  | where Timestamp > ago(1h) // Look for network connections in the last hour (adjustable)
+  | where MACAddress !in (registered_mac_addresses) // Filter out registered devices by MAC address
+  | summarize ConnectionCount = count() by MACAddress, bin(Timestamp, 10m)
+  | where ConnectionCount >= new_device_threshold // Ensure the device is connecting at least once
+  | project Timestamp, MACAddress, ConnectionCount
+  | order by Timestamp desc
+alert_settings:
+  trigger: "Any"
+  frequency: "Every 10 minutes"
+  threshold: 1
+  alert_type: "High"
+  escalation_level: 2
+  description: "Unauthorized device detected attempting to connect to the network."
+response_actions:
+  - action_type: "Block Device"
+    action_parameters:
+      block_device: "true"
+      mac_address: "{{MACAddress}}"
+      reason: "New unregistered MAC address detected attempting to access the network."
+  - action_type: "Require IT Approval"
+    action_parameters:
+      require_approval: "true"
+      mac_address: "{{MACAddress}}"
+      reason: "Unauthorized device detected. IT approval is required before granting further network access."
+  - action_type: "Alert IT Team"
+    action_parameters:
+      recipients:
+        - "it@realestatecompany.com"
+      alert_subject: "Rogue Device Connected to Network"
+      alert_message: |
+        A new unauthorized device (MAC Address: {{MACAddress}}) has connected to the network. It is not registered in the corporate device registry.
+        The device has been blocked, and IT approval is required before allowing further access.
+schedule:
+  interval: "Every 10 minutes"
+  start_time: "2025-02-19T00:00:00Z"
+  end_time: null
+tags:
+  - "network-security"
+  - "unauthorized-access"
+  - "rogue-device"
+  - "wi-fi"
+  - "vpn"
