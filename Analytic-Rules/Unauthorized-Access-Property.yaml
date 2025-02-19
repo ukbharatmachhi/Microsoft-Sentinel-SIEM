@@ -1,0 +1,36 @@
+id: unauthorized-access-property-management
+name: "Unauthorized Access to Property Management System"
+description: "Detects multiple failed login attempts to property management platforms (e.g., Yardi, RealPage, Salesforce) indicating possible credential abuse."
+severity: High
+enabled: true
+query: |
+  SigninLogs
+  | where AppDisplayName in ("Yardi", "RealPage", "Salesforce")
+  | where ResultType != "0"  // Failed login attempts
+  | summarize FailedAttempts = count() by UserPrincipalName, IPAddress, bin(TimeGenerated, 15m)
+  | where FailedAttempts > 5
+triggerOperator: gt
+triggerThreshold: 5
+queryFrequency: 15m
+queryPeriod: 15m
+suppressionDuration: 30m
+suppressionEnabled: false
+tactics:
+  - InitialAccess
+relevantTechniques:
+  - T1078  # Valid Accounts (MITRE ATT&CK)
+actionGroups:
+  - name: "Security Alert"
+    sendToSOC: true
+    emailNotification:
+      enabled: true
+      recipients:
+        - "security-team@company.com"
+responseActions:
+  - type: "Block-IP"
+    action: "Run Playbook"
+    parameters:
+      IP: "{{IPAddress}}"
+      Reason: "Multiple failed login attempts detected"
+      BlockDuration: "24h"
+version: 1.0.0
